@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Iframe from './Iframe';
+import Iframe from './Iframe.jsx';
 
 const propTypes = {
   videoId: PropTypes.string.isRequired,
@@ -13,9 +13,9 @@ const YouTubePlayerView = (props) => {
 
   return (
     <Iframe
-      src={`https://www.youtube.com/embed/${videoId}`}
-      height={560}
-      width={315}
+      src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
+      height={315}
+      width={560}
     />
   )
 

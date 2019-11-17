@@ -1,10 +1,14 @@
+import axios from 'axios';
 
-import {google} from 'googleapis';
+const KEY = 'AIzaSyCbq0VG3_cST2x1_4IZEsZdtOiRQpBJ-bk';
 
-// initialize the Youtube API library
-const lucidClient = google.youtube({
-  version: 'v3',
-  auth: 'AIzaSyCbq0VG3_cST2x1_4IZEsZdtOiRQpBJ-bk',
+const lucidClient = axios.create({
+    baseURL: 'https://www.googleapis.com/youtube/v3/',
+    params: {
+      part: 'id,snippet',
+      maxResults: 5,
+      key: KEY,
+    },
 });
 
-export default lucidClient;
+export { lucidClient, KEY};

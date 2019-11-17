@@ -1,12 +1,13 @@
 {
   "name": "lucid-wild",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "JS Project",
   "main": "index.js",
   "scripts": {
     "clean:all": "rimraf ./package-lock.json && rimraf ./node_modules",
     "clean:install": "npm run clean:all && npm install",
     "build": "webpack --mode production",
+    "build:dev": "webpack --mode development",
     "start": "webpack-dev-server --open --mode development",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

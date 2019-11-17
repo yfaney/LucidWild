@@ -1,6 +1,9 @@
 import React from 'react';
 
-import lucidClient from '../../service/LucidClient';
+import SearchView from './SearchView.jsx';
+import YouTubePlayerView from './YouTubePlayerView.jsx';
+
+import { lucidClient, KEY } from '../../service/LucidClient.jsx';
 
 const wordCount = (text, keywords) => {
   const keyMap = {};
@@ -20,8 +23,9 @@ const wordCount = (text, keywords) => {
 const findBestResult = (searchResult, keywords) => {
   let maxSearchCount = 0;
   let maxResultIndex = 0;
-  searchResult.forEach((index, element) => {
+  searchResult.forEach((element, index) => {
     const { snippet } = element;
+    debugger;
     let count = wordCount(snippet.title, keywords);
     if (count > maxSearchCount) {
       maxSearchCount = count;
@@ -32,9 +36,10 @@ const findBestResult = (searchResult, keywords) => {
 }
 
 class YouTubeShowerView extends React.Component {
-  constructor() {
+  constructor(props) {
+    super(props);
+
     this.state = {
-      videoId: null,
       searchText: null,
       searchResult: null,
     };
@@ -43,29 +48,41 @@ class YouTubeShowerView extends React.Component {
   }
 
   handleSearch(searchText) {
-    lucidClient.search.list({
-      part: 'id,snippet',
-      q: searchText,
-    }, (err, response) => {
-      if (err) {
-        console.log('The API returned an error: ' + err);
-        return;
-      }
-      console.log(JSON.stringify(response.data));
+    lucidClient.get('/search', {
+      params: {
+        part: 'id,snippet',
+        q: searchText,
+        key: KEY,
+      },
+    }).then((response) => {
       this.setState({
         searchResult: response.data.items,
-      })
+        searchText,
+      });
+    }).catch((error) => {
+      console.log('The API returned an error: ' + error);
     });
   }
 
   render() {
-    const { searchResult } = this.state;
-    const bestResult = searchResult[0];
+    const {
+      searchResult,
+      searchText,
+    } = this.state;
+
+    console.log(searchResult)
+
+    const bestResult = searchResult && searchResult.length > 0
+      ? searchResult[findBestResult(searchResult, searchText.split(' '))] : null;
+
+    const playerView = bestResult ? (
+      <YouTubePlayerView videoId={bestResult.id.videoId} />
+    ) : undefined;
 
     return (
       <div>
         <SearchView onSearch={this.handleSearch} />
-        <YouTubePlayerView videoId={bestResult.id.videoId} />
+        {playerView}
       </div>
     );
   }

@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -31,6 +33,7 @@ const SearchView = (props) => {
   const classes = useStyles();
 
   const [searchText, setSearchText] = React.useState('');
+
   const handleClick = () => {
     if (onSearch) {
       onSearch(searchText);
@@ -39,34 +42,41 @@ const SearchView = (props) => {
     }
   };
 
+  const onEnterPress = (e) => {
+    if (e.key === 'Enter') {
+      console.log('Enter key pressed');
+      // write your functionality here
+      handleClick();
+    }
+  };
+
   const handleSearchText = (event) => {
     setSearchText(event.target.value);
   };
 
   return (
-    <form className={classes.container} noValidate autoComplete="off">
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <Typography>
-            Search a video and play
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            id="text-search"
-            className={classes.textField}
-            onChange={handleSearchText}
-            label="Search keyword"
-            margin="normal"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Button variant="contained" className={classes.button} onClick={handleClick}>
-            Search
-          </Button>
-        </Grid>
+    <Grid container spacing={3}>
+      <Grid item xs={12}>
+        <Typography>
+          Search a video and play
+        </Typography>
       </Grid>
-    </form>
+      <Grid item xs={12}>
+        <TextField
+          id="text-search"
+          className={classes.textField}
+          onChange={handleSearchText}
+          label="Search keyword"
+          margin="normal"
+          onKeyPress={onEnterPress}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <Button variant="contained" className={classes.button} onClick={handleClick}>
+          Search
+        </Button>
+      </Grid>
+    </Grid>
   );
 };
 
