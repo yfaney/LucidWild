@@ -10,7 +10,7 @@ const useStyles = makeStyles(() => ({
     'padding-top': '56.25%',
   },
   respIframe: {
-    position: absolute,
+    position: 'absolute',
     top: 0,
     left: 0,
     width: '100%',
