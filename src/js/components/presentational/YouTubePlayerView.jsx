@@ -13,7 +13,7 @@ const YouTubePlayerView = (props) => {
 
   return (
     <Iframe
-      src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
+      src={`https://www.youtube.com/embed/${videoId}?autoplay=1&muted=1`}
       height={315}
       width={560}
     />
