@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   respContainer: {
-    position: relative,
-    overflow: hidden,
+    position: 'relative',
+    overflow: 'hidden',
     'padding-top': '56.25%',
   },
   respIframe: {
